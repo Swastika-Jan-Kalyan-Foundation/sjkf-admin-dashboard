@@ -40,7 +40,7 @@ const API = "https://sjkf-backend-api-production.up.railway.app/api";
 
 const MAIN_MENU = [
   { key: "delete",    label: "Delete Subscriber",   icon: <IconTrash size={14} color="white" />,  grad: "linear-gradient(135deg,#7f1d1d,#dc2626)" },
-  { key: "donation",  label: "Monitor Donation",     icon: <IconCoin size={14} color="white" />,   grad: "linear-gradient(135deg,#1e3a5f,#2563eb)" },
+  { key: "donation",  label: "Monitor Donation",     icon: <IconCoin size={14} color="white" />,   grad: "linear-gradient(135deg,#1b4332,#2d6a4f)" },
   { key: "volunteer", label: "Monitor Volunteer",    icon: <IconUsers size={14} color="white" />,  grad: "linear-gradient(135deg,#14532d,#16a34a)" },
 ];
 
@@ -64,9 +64,9 @@ function InfoRow({ icon, label, value }) {
   if (!value && value !== 0) return null;
   return (
     <div style={{ display: "flex", gap: 8, marginBottom: 7, fontSize: 12, alignItems: "flex-start" }}>
-      <span style={{ color: "#64748b", flexShrink: 0, marginTop: 1 }}>{icon}</span>
-      <span style={{ color: "#94a3b8", fontWeight: 600, minWidth: 110, flexShrink: 0, textTransform: "uppercase", fontSize: 10, letterSpacing: "0.05em", marginTop: 1 }}>{label}</span>
-      <span style={{ color: "#e2e8f0", fontWeight: 500, wordBreak: "break-word", fontSize: 12 }}>{value}</span>
+      <span style={{ color: "#52b788", flexShrink: 0, marginTop: 1 }}>{icon}</span>
+      <span style={{ color: "#74b69a", fontWeight: 600, minWidth: 110, flexShrink: 0, textTransform: "uppercase", fontSize: 10, letterSpacing: "0.05em", marginTop: 1 }}>{label}</span>
+      <span style={{ color: "#1b4332", fontWeight: 500, wordBreak: "break-word", fontSize: 12 }}>{value}</span>
     </div>
   );
 }
@@ -76,11 +76,11 @@ function StatusBadge({ status }) {
     pending:  { bg: "#78350f", color: "#fde68a", label: "Pending" },
     accepted: { bg: "#14532d", color: "#86efac", label: "Accepted" },
     rejected: { bg: "#7f1d1d", color: "#fca5a5", label: "Rejected" },
-    completed:{ bg: "#1e3a5f", color: "#93c5fd", label: "Completed" },
+    completed:{ bg: "#1b4332", color: "#95d5b2", label: "Completed" },
     verified: { bg: "#14532d", color: "#86efac", label: "Verified" },
     failed:   { bg: "#7f1d1d", color: "#fca5a5", label: "Failed" },
   };
-  const s = map[(status || "").toLowerCase()] || { bg: "#1e293b", color: "#94a3b8", label: status || "—" };
+  const s = map[(status || "").toLowerCase()] || { bg: "#e8f5e9", color: "#74b69a", label: status || "—" };
   return (
     <span style={{ background: s.bg, color: s.color, borderRadius: 20, padding: "2px 10px", fontSize: 10, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" }}>
       {s.label}
@@ -94,9 +94,9 @@ function StatusBadge({ status }) {
 function DonationCard({ data }) {
   const d = data?.data || data;
   return (
-    <div style={{ background: "linear-gradient(135deg,#0f172a,#1e293b)", borderRadius: 14, padding: "14px 16px", marginTop: 8, border: "1px solid #334155" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #1e293b" }}>
-        <span style={{ color: "#94a3b8", fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Donation Record</span>
+    <div style={{ background: "#f0faf4", borderRadius: 14, padding: "14px 16px", marginTop: 8, border: "1.5px solid #c8e6c9" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #c8e6c9" }}>
+        <span style={{ color: "#74b69a", fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Donation Record</span>
         <StatusBadge status={d?.status} />
       </div>
       <InfoRow icon={<IconTag size={13} />}     label="Donor ID"    value={d?.donorId} />
@@ -119,9 +119,9 @@ function DonationCard({ data }) {
 function VolunteerCard({ data, onAccept, onReject, onClose, isActing }) {
   const v = data?.data || data;
   return (
-    <div style={{ background: "linear-gradient(135deg,#0f172a,#1e293b)", borderRadius: 14, padding: "14px 16px", marginTop: 8, border: "1px solid #334155" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #1e293b" }}>
-        <span style={{ color: "#94a3b8", fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Volunteer Application</span>
+    <div style={{ background: "#f0faf4", borderRadius: 14, padding: "14px 16px", marginTop: 8, border: "1.5px solid #c8e6c9" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #c8e6c9" }}>
+        <span style={{ color: "#74b69a", fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Volunteer Application</span>
         <StatusBadge status={v?.status} />
       </div>
       <InfoRow icon={<IconTag size={13} />}       label="Applicant ID"   value={v?.applicantId} />
@@ -147,7 +147,7 @@ function VolunteerCard({ data, onAccept, onReject, onClose, isActing }) {
           onClick={onAccept}
           disabled={isActing || v?.status?.toLowerCase() === "accepted"}
           style={{
-            background: (isActing || v?.status?.toLowerCase() === "accepted") ? "#1e293b" : "linear-gradient(90deg,#14532d,#16a34a)",
+            background: (isActing || v?.status?.toLowerCase() === "accepted") ? "#e8f5e9" : "linear-gradient(90deg,#14532d,#16a34a)",
             color: v?.status?.toLowerCase() === "accepted" ? "#86efac" : "white",
             border: v?.status?.toLowerCase() === "accepted" ? "1px solid #16a34a" : "none",
             borderRadius: 20, padding: "8px 16px", fontSize: 12, fontWeight: 700,
@@ -163,7 +163,7 @@ function VolunteerCard({ data, onAccept, onReject, onClose, isActing }) {
           onClick={onReject}
           disabled={isActing || v?.status?.toLowerCase() === "rejected"}
           style={{
-            background: (isActing || v?.status?.toLowerCase() === "rejected") ? "#1e293b" : "linear-gradient(90deg,#7f1d1d,#dc2626)",
+            background: (isActing || v?.status?.toLowerCase() === "rejected") ? "#e8f5e9" : "linear-gradient(90deg,#7f1d1d,#dc2626)",
             color: v?.status?.toLowerCase() === "rejected" ? "#fca5a5" : "white",
             border: v?.status?.toLowerCase() === "rejected" ? "1px solid #dc2626" : "none",
             borderRadius: 20, padding: "8px 16px", fontSize: 12, fontWeight: 700,
@@ -179,12 +179,12 @@ function VolunteerCard({ data, onAccept, onReject, onClose, isActing }) {
           onClick={onClose}
           disabled={isActing}
           style={{
-            background: "transparent", color: "#64748b", border: "1px solid #334155",
+            background: "transparent", color: "#52b788", border: "1.5px solid #c8e6c9",
             borderRadius: 20, padding: "8px 14px", fontSize: 12, fontWeight: 600,
             cursor: isActing ? "not-allowed" : "pointer", fontFamily: "Sora,sans-serif",
             display: "flex", alignItems: "center", gap: 5, transition: "all 0.18s",
           }}>
-          <IconClose size={11} color="#64748b" /> Close
+          <IconClose size={11} color="#52b788" /> Close
         </button>
       </div>
     </div>
@@ -455,7 +455,7 @@ export default function AdminAssistant() {
         @keyframes adminSlideUp  { from{opacity:0;transform:translateY(20px) scale(0.96)} to{opacity:1;transform:translateY(0) scale(1)} }
         @keyframes adminMsgIn    { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         @keyframes adminDot      { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
-        @keyframes adminGlow     { 0%,100%{box-shadow:0 0 0 0 rgba(99,102,241,0.5)} 50%{box-shadow:0 0 0 10px rgba(99,102,241,0)} }
+        @keyframes adminGlow     { 0%,100%{box-shadow:0 0 0 0 rgba(82,183,136,0.5)} 50%{box-shadow:0 0 0 10px rgba(82,183,136,0)} }
         @keyframes adminSpin     { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
         .admin-chat-open { animation: adminSlideUp 0.35s cubic-bezier(.22,1,.36,1) both; }
         .admin-msg-in    { animation: adminMsgIn 0.28s ease both; }
@@ -463,7 +463,7 @@ export default function AdminAssistant() {
         .admin-send-btn:hover:not(:disabled) { transform: scale(1.07); }
         .admin-send-btn:active:not(:disabled) { transform: scale(0.95); }
         ::-webkit-scrollbar { width: 3px; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #c8e6c9; border-radius: 4px; }
       `}</style>
 
       <div className="sjkf-admin">
@@ -474,9 +474,9 @@ export default function AdminAssistant() {
           style={{
             position: "fixed", bottom: 28, right: 28, zIndex: 9999,
             width: 58, height: 58, borderRadius: "50%",
-            background: "linear-gradient(135deg,#312e81,#6366f1)",
+            background: "linear-gradient(135deg, rgb(27, 67, 50), rgb(64, 145, 108))",
             display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer", boxShadow: "0 6px 24px rgba(99,102,241,0.45)",
+            cursor: "pointer", boxShadow: "0 6px 24px rgba(45,106,79,0.4)",
             animation: open ? "none" : "adminGlow 2.5s infinite",
             transition: "transform 0.2s",
           }}
@@ -492,33 +492,33 @@ export default function AdminAssistant() {
             position: "fixed", bottom: 100, right: 28,
             width: 390, maxWidth: "calc(100vw - 40px)",
             height: 600, maxHeight: "calc(100vh - 120px)",
-            background: "#0f172a",
+            background: "#fafffe",
             borderRadius: 22,
-            boxShadow: "0 24px 64px rgba(0,0,0,0.6), 0 4px 16px rgba(99,102,241,0.2)",
+            boxShadow: "0 24px 64px rgba(27,67,50,0.22), 0 4px 16px rgba(45,106,79,0.1)",
             display: "flex", flexDirection: "column", overflow: "hidden",
-            zIndex: 9998, border: "1px solid #1e293b",
+            zIndex: 9998, border: "1.5px solid #c8e6c9",
           }}>
 
             {/* Header */}
             <div style={{
-              background: "linear-gradient(135deg,#1e1b4b,#312e81)",
+              background: "rgb(64, 145, 108)",
               padding: "14px 18px", display: "flex", alignItems: "center",
-              gap: 12, flexShrink: 0, borderBottom: "1px solid #312e81",
+              gap: 12, flexShrink: 0, borderBottom: "1px solid #52b788",
             }}>
               <div style={{
                 width: 42, height: 42, borderRadius: "50%",
-                background: "linear-gradient(135deg,#6366f1,#818cf8)",
+                background: "linear-gradient(135deg, rgb(82, 183, 136), rgb(149, 213, 178))",
                 display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
               }}>
                 <IconShield size={20} />
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ color: "white", fontSize: 14, fontWeight: 800, letterSpacing: "-0.01em" }}>Admin Assistant</div>
-                <div style={{ color: "#818cf8", fontSize: 10, fontWeight: 500 }}>SJKF Control Panel · Secure</div>
+                <div style={{ color: "rgb(149, 213, 178)", fontSize: 10, fontWeight: 500 }}>SJKF Control Panel · Secure</div>
               </div>
               <button onClick={handleRestart} style={{
-                background: "rgba(255,255,255,0.08)", border: "none", borderRadius: 20,
-                padding: "5px 10px", color: "#a5b4fc", fontSize: 10, fontWeight: 600,
+                background: "rgba(255, 255, 255, 0.1)", border: "none", borderRadius: 20,
+                padding: "5px 10px", color: "rgb(149, 213, 178)", fontSize: 10, fontWeight: 600,
                 cursor: "pointer", fontFamily: "Sora,sans-serif",
                 display: "flex", alignItems: "center", gap: 5,
               }}>
@@ -537,7 +537,7 @@ export default function AdminAssistant() {
             <div style={{
               flex: 1, overflowY: "auto", padding: "16px 14px",
               display: "flex", flexDirection: "column", gap: 10,
-              background: "#0f172a",
+              background: "#fafffe",
             }}>
               {messages.map((msg) => (
                 <div key={msg.id} className="admin-msg-in" style={{
@@ -548,7 +548,7 @@ export default function AdminAssistant() {
                   {msg.role === "bot" && (
                     <div style={{
                       width: 28, height: 28, borderRadius: "50%",
-                      background: "linear-gradient(135deg,#6366f1,#818cf8)",
+                      background: "linear-gradient(135deg,#2d6a4f,#52b788)",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0, marginBottom: 2,
                     }}>
@@ -557,12 +557,12 @@ export default function AdminAssistant() {
                   )}
                   <div style={{ maxWidth: "84%", display: "flex", flexDirection: "column" }}>
                     <div style={{
-                      background: msg.role === "bot" ? "#1e293b" : "linear-gradient(135deg,#4338ca,#6366f1)",
-                      color: msg.role === "bot" ? "#cbd5e1" : "white",
+                      background: msg.role === "bot" ? "white" : "linear-gradient(135deg,#2d6a4f,#40916c)",
+                      color: msg.role === "bot" ? "#1b4332" : "white",
                       borderRadius: msg.role === "bot" ? "16px 16px 16px 4px" : "16px 16px 4px 16px",
                       padding: "10px 13px", fontSize: 13, lineHeight: 1.65,
-                      border: msg.role === "bot" ? "1px solid #334155" : "none",
-                      boxShadow: msg.role === "bot" ? "none" : "0 3px 12px rgba(99,102,241,0.3)",
+                      border: msg.role === "bot" ? "1.5px solid #e8f5e9" : "none",
+                      boxShadow: msg.role === "bot" ? "none" : "0 3px 12px rgba(45,106,79,0.25)",
                       wordBreak: "break-word",
                     }}>
                       <BotText text={msg.text} />
@@ -577,23 +577,23 @@ export default function AdminAssistant() {
                 <div className="admin-msg-in" style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
                   <div style={{
                     width: 28, height: 28, borderRadius: "50%",
-                    background: "linear-gradient(135deg,#6366f1,#818cf8)",
+                    background: "linear-gradient(135deg,#2d6a4f,#52b788)",
                     display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                   }}>
                     <IconShield size={13} />
                   </div>
                   <div style={{
-                    background: "#1e293b", borderRadius: "16px 16px 16px 4px",
-                    padding: "12px 16px", border: "1px solid #334155",
+                    background: "white", borderRadius: "16px 16px 16px 4px",
+                    padding: "12px 16px", border: "1.5px solid #e8f5e9",
                     display: "flex", gap: 5, alignItems: "center",
                   }}>
                     {isActing
-                      ? <span style={{ fontSize: 12, color: "#818cf8", fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }}>
+                      ? <span style={{ fontSize: 12, color: "#52b788", fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }}>
                           <IconSpinner /> Processing…
                         </span>
                       : [0, 1, 2].map(i => (
                           <div key={i} style={{
-                            width: 7, height: 7, borderRadius: "50%", background: "#6366f1",
+                            width: 7, height: 7, borderRadius: "50%", background: "#40916c",
                             animation: `adminDot 1.2s ease ${i * 0.2}s infinite`,
                           }} />
                         ))
@@ -613,7 +613,7 @@ export default function AdminAssistant() {
                       padding: "10px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer",
                       fontFamily: "Sora,sans-serif", textAlign: "left",
                       display: "flex", alignItems: "center", gap: 9,
-                      boxShadow: "0 3px 12px rgba(0,0,0,0.3)",
+                      boxShadow: "0 3px 12px rgba(45,106,79,0.15)",
                     }}>
                       {icon} {label}
                     </button>
@@ -627,7 +627,7 @@ export default function AdminAssistant() {
                   display: "flex", gap: 8, marginLeft: 36, flexWrap: "wrap",
                 }}>
                   <button onClick={confirmDelete} disabled={isActing} style={{
-                    background: isActing ? "#1e293b" : "linear-gradient(90deg,#7f1d1d,#dc2626)",
+                    background: isActing ? "#fee2e2" : "linear-gradient(90deg,#7f1d1d,#dc2626)",
                     color: "white", border: "none", borderRadius: 20,
                     padding: "9px 18px", fontSize: 12, fontWeight: 700,
                     cursor: isActing ? "wait" : "pointer", fontFamily: "Sora,sans-serif",
@@ -636,12 +636,12 @@ export default function AdminAssistant() {
                     {isActing ? <><IconSpinner /> Deleting…</> : <><IconTrash size={12} /> Yes, Delete</>}
                   </button>
                   <button onClick={cancelDelete} disabled={isActing} style={{
-                    background: "transparent", color: "#64748b", border: "1px solid #334155",
+                    background: "transparent", color: "#52b788", border: "1.5px solid #c8e6c9",
                     borderRadius: 20, padding: "9px 16px", fontSize: 12, fontWeight: 600,
                     cursor: "pointer", fontFamily: "Sora,sans-serif",
                     display: "flex", alignItems: "center", gap: 5,
                   }}>
-                    <IconClose size={10} color="#64748b" /> Cancel
+                    <IconClose size={10} color="#52b788" /> Cancel
                   </button>
                 </div>
               )}
@@ -650,12 +650,12 @@ export default function AdminAssistant() {
               {phase === "done" && !isTyping && !isActing && (
                 <div className="admin-msg-in" style={{ marginLeft: 36 }}>
                   <button onClick={handleRestart} style={{
-                    background: "linear-gradient(90deg,#4338ca,#6366f1)",
-                    color: "white", border: "none", borderRadius: 20,
+                    background: "linear-gradient(90deg,#52b788,#95d5b2)",
+                    color: "#1b4332", border: "none", borderRadius: 20,
                     padding: "9px 18px", fontSize: 12, fontWeight: 700,
                     cursor: "pointer", fontFamily: "Sora,sans-serif",
                     display: "flex", alignItems: "center", gap: 6,
-                    boxShadow: "0 3px 12px rgba(99,102,241,0.4)",
+                    boxShadow: "0 3px 12px rgba(45,106,79,0.3",
                   }}>
                     <IconRestart /> Back to Menu
                   </button>
@@ -667,8 +667,8 @@ export default function AdminAssistant() {
 
             {/* Input bar */}
             <div style={{
-              padding: "12px 14px", borderTop: "1px solid #1e293b",
-              background: "#0f172a", display: "flex", gap: 8, alignItems: "center", flexShrink: 0,
+              padding: "12px 14px", borderTop: "1.5px solid #e8f5e9",
+              background: "white", display: "flex", gap: 8, alignItems: "center", flexShrink: 0,
             }}>
               <input
                 ref={inputRef}
@@ -680,9 +680,9 @@ export default function AdminAssistant() {
                 placeholder={inputEnabled ? inputPlaceholder : "Choose an option above ↑"}
                 style={{
                   flex: 1, padding: "10px 14px", borderRadius: 20,
-                  border: `1.5px solid ${inputEnabled ? "#6366f1" : "#1e293b"}`,
-                  background: inputEnabled ? "#1e293b" : "#0f172a",
-                  color: "#e2e8f0", fontSize: 13, outline: "none",
+                  border: `1.5px solid ${inputEnabled ? "#40916c" : "#e8f5e9"}`,
+                  background: inputEnabled ? "#fafffe" : "#f8fdfb",
+                  color: "#1b4332", fontSize: 13, outline: "none",
                   fontFamily: "Sora,sans-serif",
                   cursor: inputEnabled ? "text" : "not-allowed",
                   opacity: inputEnabled ? 1 : 0.5,
@@ -696,13 +696,13 @@ export default function AdminAssistant() {
                 style={{
                   width: 40, height: 40, borderRadius: "50%", border: "none",
                   background: (inputEnabled && inputVal.trim())
-                    ? "linear-gradient(135deg,#4338ca,#6366f1)" : "#1e293b",
+                    ? "linear-gradient(135deg,#2d6a4f,#40916c)" : "#e8f5e9",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   cursor: (inputEnabled && inputVal.trim()) ? "pointer" : "default",
                   flexShrink: 0, transition: "all 0.2s",
-                  boxShadow: (inputEnabled && inputVal.trim()) ? "0 4px 14px rgba(99,102,241,0.45)" : "none",
+                  boxShadow: (inputEnabled && inputVal.trim()) ? "0 4px 14px rgba(45,106,79,0.4)" : "none",
                 }}>
-                <IconSend color={(inputEnabled && inputVal.trim()) ? "white" : "#334155"} />
+                <IconSend color={(inputEnabled && inputVal.trim()) ? "white" : "#c8e6c9"} />
               </button>
             </div>
 
