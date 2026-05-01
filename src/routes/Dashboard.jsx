@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-
+import { Donation } from "./Donation";
+import {Subscriber} from './Subscriber'
+import { Volunteer } from "./Volunteer";
 /* ═══════════════════════════════════════════
    SVG ICONS
 ═══════════════════════════════════════════ */
@@ -582,27 +584,9 @@ function DashboardView({ setActive }) {
   );
 }
 
-/* ═══════════════════════════════════════════
-   PLACEHOLDER VIEWS (for nav switching)
-═══════════════════════════════════════════ */
-function PlaceholderView({ label }) {
-  return (
-    <div className="flex-1 flex items-center justify-center p-8">
-      <div className="text-center">
-        <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: "#f0fdf4", border: "2px dashed #bbf7d0" }}>
-          <LeafIcon />
-        </div>
-        <h2 className="text-xl font-bold text-green-950 mb-1">{label}</h2>
-        <p className="text-green-600 text-sm">Import your <span className="font-semibold">{label}.jsx</span> screen here.</p>
-        <p className="text-gray-400 text-xs mt-2">Replace this placeholder by rendering your existing screen component.</p>
-      </div>
-    </div>
-  );
-}
 
-/* ═══════════════════════════════════════════
-   ROOT ADMIN COMPONENT
-═══════════════════════════════════════════ */
+
+
 export const Dashboard = () => {
   const [active, setActive] = useState("dashboard");
   const [collapsed, setCollapsed] = useState(false);
@@ -625,9 +609,9 @@ export const Dashboard = () => {
 
           <main className="flex-1 overflow-y-auto">
             {active === "dashboard" && <DashboardView setActive={setActive} />}
-            {active === "subscribers" && <PlaceholderView label="Subscribers" />}
-            {active === "donations" && <PlaceholderView label="Donations" />}
-            {active === "volunteers" && <PlaceholderView label="Volunteers" />}
+            {active === "subscribers" && <Subscriber label="Subscribers" />}
+            {active === "donations" && <Donation label="Donations" />}
+            {active === "volunteers" && <Volunteer label="Volunteers" />}
           </main>
         </div>
       </div>
