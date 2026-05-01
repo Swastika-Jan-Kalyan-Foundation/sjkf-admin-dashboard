@@ -603,7 +603,7 @@ function PlaceholderView({ label }) {
 /* ═══════════════════════════════════════════
    ROOT ADMIN COMPONENT
 ═══════════════════════════════════════════ */
-export default function Admin() {
+export const Dashboard = () => {
   const [active, setActive] = useState("dashboard");
   const [collapsed, setCollapsed] = useState(false);
 
