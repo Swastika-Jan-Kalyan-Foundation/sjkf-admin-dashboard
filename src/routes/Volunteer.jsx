@@ -16,6 +16,7 @@ const api = {
   acceptVolunteer: (id) => apiCall(`${BASE_URL}/${id}/accept`, { method: "POST" }),
   rejectVolunteer: (id) => apiCall(`${BASE_URL}/${id}/reject`, { method: "POST" }),
   deleteVolunteer: (id) => apiCall(`${BASE_URL}/${id}`, { method: "DELETE" }),
+  deleteAcceptedVolunteer: (id) => apiCall(`${BASE_URL}/accepted/${id}`, {method: "DELETE"}),
   deleteAll:       () => apiCall(`${BASE_URL}/delete-all`, { method: "DELETE" }),
 };
 
@@ -547,6 +548,25 @@ export const Volunteer = () => {
     }
   };
 
+  const handleAcceptedDeleteConfirm = async () => {
+    if (!deleteTarget) return;
+    setActionLoading(true);
+    try {
+      await api.deleteAcceptedVolunteer(deleteTarget.id);
+      if (deleteTarget.type === "app") {
+        setApplications(prev => prev.filter(a => a.id !== deleteTarget.id));
+      } else {
+        setAccepted(prev => prev.filter(v => v.id !== deleteTarget.id));
+      }
+      showToast(`${deleteTarget.name} removed successfully.`, "success");
+    } catch (e) {
+      showToast("Delete failed. Try again.", "error");
+    } finally {
+      setActionLoading(false);
+      setDeleteTarget(null);
+    }
+  };
+
   const handleDeleteAll = async () => {
     setActionLoading(true);
     try {
@@ -828,7 +848,7 @@ export const Volunteer = () => {
       {deleteTarget && (
         <DeleteModal
           target={deleteTarget.name}
-          onConfirm={handleDeleteConfirm}
+          onConfirm={deleteTarget.type === "vol" ? handleAcceptedDeleteConfirm : handleDeleteConfirm}
           onCancel={() => setDeleteTarget(null)}
           loading={actionLoading}
         />
