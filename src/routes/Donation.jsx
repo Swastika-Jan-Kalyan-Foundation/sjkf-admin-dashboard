@@ -18,6 +18,8 @@ const mapDonation = (d) => ({
   razorpayOrderId: d.razorpayOrderId || null,
   amount: d.amount != null ? d.amount : 0,           // raw number from DB
   currency: d.currency || "INR",
+  panNumber: d.panNumber,
+  address: d.address,
   method: d.paymentMethod || d.method || "—",
   campaign: d.campaign || d.cause || "General Fund",
   date: d.createdAt ? new Date(d.createdAt).toLocaleDateString("en-IN") : "—",
@@ -177,6 +179,8 @@ function DonationModal({ donation, onClose }) {
             { label: "Donor ID",        value: donation.donorId },
             { label: "Email",           value: donation.email },
             { label: "Phone",           value: donation.phone },
+            { label: "PAN Number",      value: donation.panNumber },
+            { label: "Address",           value: donation.address },
             { label: "Payment Method",  value: donation.method },
             { label: "Date",            value: donation.date },
           ].map((field) => (
