@@ -475,9 +475,9 @@ function CertificateModal({ cert, onClose }) {
           {/* Fields grid */}
           <div className="grid grid-cols-2 gap-4">
             {[
-              { label: "Signing Authority", value: cert.signingAuthority || "—" },
+              { label: "Signing Authority", value: cert.signingAutority || "—" },
               { label: "Recommender", value: cert.recommender || "—" },
-              { label: "Issued On", value: cert.createdAt ? new Date(cert.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }) : "—" },
+              { label: "Issued On", value: cert.issueDate ? new Date(cert.issueDate).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }) : "—" },
               { label: "Physical Copy", value: cert.physicalCopy || "—" },
             ].map((f) => (
               <div key={f.label}>
@@ -669,8 +669,8 @@ const Certificate = () => {
           {filtered.map((cert, i) => {
             const badge = modeBadge(cert.modeOfIssue);
             const grad = gradients[i % gradients.length];
-            const issuedDate = cert.createdAt
-              ? new Date(cert.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
+            const issuedDate = cert.issueDate
+              ? new Date(cert.issueDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
               : "—";
 
             return (
@@ -711,10 +711,10 @@ const Certificate = () => {
                       <p className="text-xs text-gray-400 mt-1 line-clamp-1 max-w-lg">{cert.certificateSummary}</p>
                     )}
                     <div className="flex items-center gap-4 mt-2 text-xs text-gray-400 flex-wrap">
-                      {cert.signingAuthority && (
+                      {cert.signingAutority && (
                         <span className="flex items-center gap-1">
                           <svg viewBox="0 0 24 24" fill="none" className="w-3 h-3"><path d="M12 2l2.4 4.8L20 8l-4 3.6 1 5.4-5-2.8-5 2.8 1-5.4L4 8l5.6-1.2z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
-                          {cert.signingAuthority}
+                          {cert.signingAutority}
                         </span>
                       )}
                       {cert.recommender && (
