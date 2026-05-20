@@ -614,7 +614,7 @@ export const Dashboard = () => {
             {active === "subscribers" && <Subscriber label="Subscribers" />}
             {active === "donations" && <Donation label="Donations" />}
             {active === "volunteers" && <Volunteer label="Volunteers" />}
-            {active === "ceritificate" && <Certificate label="Certificates" />}
+            {active === "certificate" && <Certificate label="Certificates" />}
           </main>
         </div>
       </div>
