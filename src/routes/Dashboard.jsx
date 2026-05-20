@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Donation } from "./Donation";
 import {Subscriber} from './Subscriber'
 import { Volunteer } from "./Volunteer";
+import Certificate from "./Certificate";
 /* ═══════════════════════════════════════════
    SVG ICONS
 ═══════════════════════════════════════════ */
@@ -78,6 +79,7 @@ const NAV = [
   { id: "subscribers", label: "Subscribers" },
   { id: "donations", label: "Donations" },
   { id: "volunteers", label: "Volunteers" },
+  { id: "certificate", label: "Certificates" },
 ];
 
 /* ═══════════════════════════════════════════
@@ -195,7 +197,7 @@ function Sidebar({ active, setActive, collapsed, setCollapsed }) {
    TOPBAR
 ═══════════════════════════════════════════ */
 function Topbar({ screen }) {
-  const labels = { dashboard: "Overview Dashboard", subscribers: "Subscribers", donations: "Donations", volunteers: "Volunteers" };
+  const labels = { dashboard: "Overview Dashboard", subscribers: "Subscribers", donations: "Donations", volunteers: "Volunteers", certificate: "Certificates" };
   const subs = {
     dashboard: "Here's everything happening across your NGO today.",
     subscribers: "Manage your newsletter community.",
@@ -612,6 +614,7 @@ export const Dashboard = () => {
             {active === "subscribers" && <Subscriber label="Subscribers" />}
             {active === "donations" && <Donation label="Donations" />}
             {active === "volunteers" && <Volunteer label="Volunteers" />}
+            {active === "ceritificate" && <Certificate label="Certificates" />}
           </main>
         </div>
       </div>
