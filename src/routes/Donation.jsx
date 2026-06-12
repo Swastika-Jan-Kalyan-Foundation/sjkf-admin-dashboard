@@ -12,7 +12,7 @@ const api = {
 /* ── Data Mapper ── */
 const mapDonation = (d) => ({
   id: d._id,
-  donorName: d.donorName || d.name || "Anonymous",
+  donorName: d.isAnonymous ? "Anonymous" : (d.fullName || d.donorName || d.name || "—"),
   donorId: d.donorId || "—",
   transactionId: d.transactionId || d.razorpayPaymentId || "—",
   razorpayOrderId: d.razorpayOrderId || null,
@@ -21,7 +21,7 @@ const mapDonation = (d) => ({
   panNumber: d.panNumber,
   address: d.address,
   method: d.paymentMethod || d.method || "—",
-  campaign: d.campaign || d.cause || "General Fund",
+  campaign: d.donationPurpose || d.campaign || d.cause || "General Fund",
   date: d.createdAt ? new Date(d.createdAt).toLocaleDateString("en-IN") : "—",
   email: d.email || "—",
   phone: d.phone || d.phoneNumber || "—",
