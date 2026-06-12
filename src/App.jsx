@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       <Dashboard onLogout={logout} />
-      <AdminAssistant />
+
     </>
   );
 }

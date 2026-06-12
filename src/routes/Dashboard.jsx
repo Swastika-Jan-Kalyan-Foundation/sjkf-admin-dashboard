@@ -50,7 +50,7 @@ const icons = {
       <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
-  trend: (
+  certificate: (
     <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
       <path d="M23 6l-9.5 9.5-5-5L1 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M17 6h6v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -130,8 +130,7 @@ function Sidebar({ active, setActive, collapsed, setCollapsed, onLogout }) {
         </div>
         {!collapsed && (
           <div className="overflow-hidden">
-            <div className="text-white font-bold text-[15px] leading-tight tracking-tight">GreenRoot</div>
-            <div className="text-green-400 text-[10px] font-semibold tracking-[0.18em] uppercase mt-0.5">Admin Panel</div>
+            <div className="text-white font-bold text-[15px] leading-tight tracking-tight">Admin Panel</div>
           </div>
         )}
       </div>
@@ -236,11 +235,9 @@ function Topbar({ screen }) {
       <div className="flex items-center gap-4">
         <div className="text-right">
           <p className="text-xs font-semibold text-gray-400">{now}</p>
-          <p className="text-[10px] text-green-500 font-bold tracking-widest uppercase mt-0.5">Live Data</p>
+          
         </div>
         <div className="w-px h-8" style={{ background: "#dcfce7" }} />
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold text-white"
-          style={{ background: "linear-gradient(135deg,#0f3d24,#4ade80)" }}>A</div>
       </div>
     </div>
   );
