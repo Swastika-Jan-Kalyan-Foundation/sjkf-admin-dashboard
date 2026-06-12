@@ -85,7 +85,7 @@ const NAV = [
 /* ═══════════════════════════════════════════
    SIDEBAR
 ═══════════════════════════════════════════ */
-function Sidebar({ active, setActive, collapsed, setCollapsed }) {
+function Sidebar({ active, setActive, collapsed, setCollapsed, onLogout }) {
   return (
     <aside
       className="h-screen flex flex-col sticky top-0 flex-shrink-0 transition-all duration-300 relative"
@@ -167,27 +167,49 @@ function Sidebar({ active, setActive, collapsed, setCollapsed }) {
         })}
       </nav>
 
-      {/* User */}
       <div className="px-3 py-4" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-        <div className="flex items-center gap-3 px-2">
-          <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-            style={{ background: "linear-gradient(135deg,#4ade80,#166534)" }}>
-            A
-          </div>
-          {!collapsed && (
-            <div className="flex-1 min-w-0">
-              <p className="text-white text-xs font-bold truncate">Administrator</p>
-              <p className="text-green-400 text-[10px] truncate">Full Access</p>
-            </div>
-          )}
-          {!collapsed && (
-            <button className="flex-shrink-0 transition-colors" style={{ color: "rgba(255,255,255,0.3)" }}
-              onMouseEnter={e => e.currentTarget.style.color = "#f87171"}
-              onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.3)"}>
+        {collapsed ? (
+          /* Collapsed — icon only */
+          <div className="flex justify-center">
+            <button
+              onClick={onLogout}
+              title="Logout"
+              className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200"
+              style={{ color: "rgba(255,255,255,0.35)", background: "transparent" }}
+              onMouseEnter={e => { e.currentTarget.style.color = "#f87171"; e.currentTarget.style.background = "rgba(248,113,113,0.1)"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.35)"; e.currentTarget.style.background = "transparent"; }}
+            >
               {icons.logout}
             </button>
-          )}
-        </div>
+          </div>
+        ) : (
+          /* Expanded — full logout button */
+          <button
+            onClick={onLogout}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group"
+            style={{
+              background: "rgba(248,113,113,0.07)",
+              border: "1px solid rgba(248,113,113,0.15)",
+              color: "rgba(248,113,113,0.7)",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = "rgba(248,113,113,0.14)";
+              e.currentTarget.style.borderColor = "rgba(248,113,113,0.35)";
+              e.currentTarget.style.color = "#f87171";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = "rgba(248,113,113,0.07)";
+              e.currentTarget.style.borderColor = "rgba(248,113,113,0.15)";
+              e.currentTarget.style.color = "rgba(248,113,113,0.7)";
+            }}
+          >
+            <span className="flex-shrink-0">{icons.logout}</span>
+            <span className="text-[13px] font-semibold tracking-wide">Logout</span>
+            <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 ml-auto opacity-50">
+              <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        )}
       </div>
     </aside>
   );
@@ -589,7 +611,7 @@ function DashboardView({ setActive }) {
 
 
 
-export const Dashboard = () => {
+export const Dashboard = ({ onLogout }) => {
   const [active, setActive] = useState("dashboard");
   const [collapsed, setCollapsed] = useState(false);
 
@@ -604,7 +626,7 @@ export const Dashboard = () => {
       `}</style>
 
       <div className="flex h-screen overflow-hidden" style={{ background: "#f0fdf4" }}>
-        <Sidebar active={active} setActive={setActive} collapsed={collapsed} setCollapsed={setCollapsed} />
+        <Sidebar active={active} setActive={setActive} collapsed={collapsed} setCollapsed={setCollapsed} onLogout={onLogout} />
 
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <Topbar screen={active} />
