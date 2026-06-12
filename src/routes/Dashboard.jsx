@@ -258,7 +258,7 @@ function StatCard({ label, value, sub, icon, accent }) {
         </div>
         <div className="flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full"
           style={{ background: "#f0fdf4", color: "#15803d" }}>
-          {icons.trend} +12%
+      
         </div>
       </div>
       <div>
