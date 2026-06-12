@@ -1,19 +1,31 @@
-import { useState, useEffect } from 'react'
 import React from 'react'
 import './App.css'
 import './index.css'
-import {Dashboard} from "./routes/Dashboard"
+import { Dashboard } from "./routes/Dashboard"
 import AdminAssistant from './components/AdminAssitant'
-function App() {
-  const [count, setCount] = useState(0)
+import LoginPage from './components/LoginPage'
+import { useAuth } from './hooks/useAuth'
 
+function App() {
+  const { isAuthenticated, login, logout, loading, error, setError } = useAuth();
+
+  if (!isAuthenticated) {
+    return (
+      <LoginPage
+        onLogin={login}
+        loading={loading}
+        error={error}
+        setError={setError}
+      />
+    );
+  }
 
   return (
     <>
-<Dashboard />
-<AdminAssistant />
+      <Dashboard onLogout={logout} />
+      <AdminAssistant />
     </>
-  )
+  );
 }
 
 export default App
