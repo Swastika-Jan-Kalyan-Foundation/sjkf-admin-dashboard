@@ -185,14 +185,16 @@ function IssueCertificateModal({ onClose, onSuccess }) {
     physicalCopy: "",
     signingAuthority: "",
     recommender: "",
+    issueDate: "",
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   const modeOptions = [
     { value: "Online with DSC", label: "Online with DSC", icon: "🔐" },
+    { value: "Online with Scan Signature", label: "Online with Scan Signature", icon: "✍️" },
     { value: "Offline with Physical Sign", label: "Offline with Physical Sign", icon: "✍️" },
-    { value: "Both", label: "Both", icon: "🔄" },
+    { value: "Hybrid", label: "Hybrid", icon: "🔄" },
   ];
 
   const physicalOptions = [
@@ -209,6 +211,8 @@ function IssueCertificateModal({ onClose, onSuccess }) {
     if (!form.physicalCopy) e.physicalCopy = "Required";
     if (!form.signingAuthority.trim()) e.signingAuthority = "Required";
     if (!form.recommender.trim()) e.recommender = "Required";
+    if (!form.issueDate) e.issueDate = "Required";
+    else if (!/^\d{4}-\d{2}-\d{2}$/.test(form.issueDate)) e.issueDate = "Must be in YYYY-MM-DD format";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -346,23 +350,25 @@ function IssueCertificateModal({ onClose, onSuccess }) {
               </div>
             </div>
 
-            {/* Signing Authority + Recommender */}
+            {/* Signing Authority */}
+            <div>
+              <label className="text-xs text-green-600 font-semibold uppercase tracking-wider mb-1.5 block">
+                Signing Authority <span className="text-red-400">*</span>
+              </label>
+              <input
+                value={form.signingAuthority}
+                onChange={(e) => set("signingAuthority")(e.target.value)}
+                placeholder="Name & designation"
+                className="w-full px-4 py-3 rounded-xl text-sm text-gray-800 placeholder-gray-400"
+                style={fieldClass("signingAuthority")}
+                onFocus={(e) => { e.target.style.boxShadow = "0 0 0 3px rgba(74,222,128,0.12)"; e.target.style.borderColor = "#4ade80"; }}
+                onBlur={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = errors.signingAuthority ? "#fca5a5" : "#bbf7d0"; }}
+              />
+              {errors.signingAuthority && <p className="text-xs text-red-500 mt-1">{errors.signingAuthority}</p>}
+            </div>
+
+            {/* Recommender + Issue Date */}
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="text-xs text-green-600 font-semibold uppercase tracking-wider mb-1.5 block">
-                  Signing Authority <span className="text-red-400">*</span>
-                </label>
-                <input
-                  value={form.signingAuthority}
-                  onChange={(e) => set("signingAuthority")(e.target.value)}
-                  placeholder="Name & designation"
-                  className="w-full px-4 py-3 rounded-xl text-sm text-gray-800 placeholder-gray-400"
-                  style={fieldClass("signingAuthority")}
-                  onFocus={(e) => { e.target.style.boxShadow = "0 0 0 3px rgba(74,222,128,0.12)"; e.target.style.borderColor = "#4ade80"; }}
-                  onBlur={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = errors.signingAuthority ? "#fca5a5" : "#bbf7d0"; }}
-                />
-                {errors.signingAuthority && <p className="text-xs text-red-500 mt-1">{errors.signingAuthority}</p>}
-              </div>
               <div>
                 <label className="text-xs text-green-600 font-semibold uppercase tracking-wider mb-1.5 block">
                   Recommender <span className="text-red-400">*</span>
@@ -377,6 +383,21 @@ function IssueCertificateModal({ onClose, onSuccess }) {
                   onBlur={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = errors.recommender ? "#fca5a5" : "#bbf7d0"; }}
                 />
                 {errors.recommender && <p className="text-xs text-red-500 mt-1">{errors.recommender}</p>}
+              </div>
+              <div>
+                <label className="text-xs text-green-600 font-semibold uppercase tracking-wider mb-1.5 block">
+                  Issue Date <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="date"
+                  value={form.issueDate}
+                  onChange={(e) => set("issueDate")(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl text-sm text-gray-800"
+                  style={{ ...fieldClass("issueDate"), colorScheme: "light" }}
+                  onFocus={(e) => { e.target.style.boxShadow = "0 0 0 3px rgba(74,222,128,0.12)"; e.target.style.borderColor = "#4ade80"; }}
+                  onBlur={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = errors.issueDate ? "#fca5a5" : "#bbf7d0"; }}
+                />
+                {errors.issueDate && <p className="text-xs text-red-500 mt-1">{errors.issueDate}</p>}
               </div>
             </div>
 
@@ -425,7 +446,7 @@ function CertificateModal({ cert, onClose }) {
   const modeBadge = {
     "Online with DSC": { bg: "#dbeafe", color: "#1e40af", icon: "🔐" },
     "Offline with Physical Sign": { bg: "#fef9c3", color: "#92400e", icon: "✍️" },
-    Both: { bg: "#f3e8ff", color: "#6b21a8", icon: "🔄" },
+    Hybrid: { bg: "#f3e8ff", color: "#6b21a8", icon: "🔄" },
   };
   const m = modeBadge[cert.modeOfIssue] || { bg: "#f0fdf4", color: "#166534", icon: "📜" };
 
@@ -469,6 +490,17 @@ function CertificateModal({ cert, onClose }) {
               <div className="rounded-xl p-3 text-sm text-gray-600" style={{ background: "#f0fdf4", border: "1px solid #bbf7d0" }}>
                 {cert.certificateSummary}
               </div>
+            </div>
+          )}
+
+          {/* Certificate ID */}
+          {cert.certificateId && (
+            <div className="rounded-xl px-4 py-3 flex items-center justify-between gap-3" style={{ background: "#f0fdf4", border: "1.5px solid #86efac" }}>
+              <div>
+                <p className="text-xs text-green-600 font-semibold uppercase tracking-wider mb-0.5">Certificate ID</p>
+                <p className="text-sm font-bold text-green-900" style={{ fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.03em" }}>{cert.certificateId}</p>
+              </div>
+              <span className="text-lg">🪪</span>
             </div>
           )}
 
@@ -547,7 +579,7 @@ const Certificate = () => {
     const map = {
       "Online with DSC": { bg: "#dbeafe", color: "#1e40af", label: "Online · DSC" },
       "Offline with Physical Sign": { bg: "#fef9c3", color: "#92400e", label: "Offline · Sign" },
-      Both: { bg: "#f3e8ff", color: "#6b21a8", label: "Both" },
+      Hybrid: { bg: "#f3e8ff", color: "#6b21a8", label: "Hybrid" },
     };
     return map[mode] || { bg: "#f0fdf4", color: "#166534", label: mode || "—" };
   };
