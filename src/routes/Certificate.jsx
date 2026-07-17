@@ -179,6 +179,7 @@ function CustomDropdown({ value, onChange, options, placeholder, icon }) {
 function IssueCertificateModal({ onClose, onSuccess }) {
   const [form, setForm] = useState({
     issuedTo: "",
+    certificateId: "",
     certificateTitle: "",
     certificateSummary: "",
     modeOfIssue: "",
@@ -285,6 +286,21 @@ function IssueCertificateModal({ onClose, onSuccess }) {
                 onBlur={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = errors.issuedTo ? "#fca5a5" : "#bbf7d0"; }}
               />
               {errors.issuedTo && <p className="text-xs text-red-500 mt-1">{errors.issuedTo}</p>}
+            </div>
+
+            <div>
+              <label className="text-xs text-green-600 font-semibold uppercase tracking-wider mb-1.5 block">
+                Certificate ID <span className="text-gray-400 font-normal normal-case ml-1">(Optional)</span>
+              </label>
+              <input
+                value={form.certificateId}
+                onChange={(e) => set("certificateId")(e.target.value)}
+                placeholder="System will generate if left blank"
+                className="w-full px-4 py-3 rounded-xl text-sm text-gray-800 placeholder-gray-400"
+                style={fieldClass("certificateId")}
+                onFocus={(e) => { e.target.style.boxShadow = "0 0 0 3px rgba(74,222,128,0.12)"; e.target.style.borderColor = "#4ade80"; }}
+                onBlur={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = errors.certificateId ? "#fca5a5" : "#bbf7d0"; }}
+              />
             </div>
 
             {/* Certificate Title */}
