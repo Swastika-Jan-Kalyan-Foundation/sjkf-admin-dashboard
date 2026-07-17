@@ -68,10 +68,10 @@ const icons = {
    API ENDPOINTS
 ═══════════════════════════════════════════ */
 const API = {
-  newsletter:         "https://sjkf-backend-api-production.up.railway.app/api/newsletter",
-  donations:          "https://sjkf-backend-api-production.up.railway.app/api/donations",
-  volunteers:         "https://sjkf-backend-api-production.up.railway.app/api/volunteers",
-  volunteersAccepted: "https://sjkf-backend-api-production.up.railway.app/api/volunteers/accepted",
+  newsletter:         "https://sjkfapi.onrender.com/api/newsletter",
+  donations:          "https://sjkfapi.onrender.com/api/donations",
+  volunteers:         "https://sjkfapi.onrender.com/api/volunteers",
+  volunteersAccepted: "https://sjkfapi.onrender.com/api/volunteers/accepted",
 };
 
 const NAV = [

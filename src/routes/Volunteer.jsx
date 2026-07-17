@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const BASE_URL = "https://sjkf-backend-api-production.up.railway.app/api/volunteers";
+const BASE_URL = "https://sjkfapi.onrender.com/api/volunteers";
 
 /* ── API Helpers ── */
 const apiCall = (url, options) =>

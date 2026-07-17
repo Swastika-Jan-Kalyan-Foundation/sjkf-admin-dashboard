@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const API_BASE = "https://sjkf-backend-api-production.up.railway.app/api/newsletter";
+const API_BASE = "https://sjkfapi.onrender.com/api/newsletter";
 
 /* ── SVG Icons ── */
 const MailIcon = () => (

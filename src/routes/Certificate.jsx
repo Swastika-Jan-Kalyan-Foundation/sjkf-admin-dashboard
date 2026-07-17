@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const BASE_URL = "https://sjkf-backend-api-production.up.railway.app/api/certificate";
+const BASE_URL = "https://sjkfapi.onrender.com/api/certificate";
 
 /* ── API Helpers ── */
 const apiCall = (url, options) =>
