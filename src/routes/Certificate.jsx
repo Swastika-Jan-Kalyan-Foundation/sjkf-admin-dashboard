@@ -206,6 +206,7 @@ function IssueCertificateModal({ onClose, onSuccess }) {
   const validate = () => {
     const e = {};
     if (!form.issuedTo.trim()) e.issuedTo = "Required";
+    if (!form.certificateId.trim()) e.certificateId = "Required"; 
     if (!form.certificateTitle.trim()) e.certificateTitle = "Required";
     if (!form.certificateSummary.trim()) e.certificateSummary = "Required";
     if (!form.modeOfIssue) e.modeOfIssue = "Required";
@@ -290,17 +291,18 @@ function IssueCertificateModal({ onClose, onSuccess }) {
 
             <div>
               <label className="text-xs text-green-600 font-semibold uppercase tracking-wider mb-1.5 block">
-                Certificate ID <span className="text-gray-400 font-normal normal-case ml-1">(Optional)</span>
+                Certificate ID <span className="text-red-400">*</span>
               </label>
               <input
                 value={form.certificateId}
                 onChange={(e) => set("certificateId")(e.target.value)}
-                placeholder="System will generate if left blank"
+                placeholder="Enter unique Certificate ID"
                 className="w-full px-4 py-3 rounded-xl text-sm text-gray-800 placeholder-gray-400"
                 style={fieldClass("certificateId")}
                 onFocus={(e) => { e.target.style.boxShadow = "0 0 0 3px rgba(74,222,128,0.12)"; e.target.style.borderColor = "#4ade80"; }}
                 onBlur={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = errors.certificateId ? "#fca5a5" : "#bbf7d0"; }}
               />
+              {errors.certificateId && <p className="text-xs text-red-500 mt-1">{errors.certificateId}</p>}
             </div>
 
             {/* Certificate Title */}
