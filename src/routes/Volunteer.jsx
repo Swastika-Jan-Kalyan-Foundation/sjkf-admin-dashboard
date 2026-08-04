@@ -179,8 +179,8 @@ function Toast({ toast }) {
 
 /* ── Application Detail Modal ── */
 function ApplicationModal({ app, onClose, onAccept, onReject, loading }) {
-  const age = app.dateOfBirth
-    ? Math.floor((Date.now() - new Date(app.dateOfBirth)) / (365.25 * 24 * 3600 * 1000))
+  const dob = app.dateOfBirth
+    ? new Date(app.dateOfBirth).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })
     : null;
 
   return (
@@ -207,7 +207,7 @@ function ApplicationModal({ app, onClose, onAccept, onReject, loading }) {
         <div className="px-7 py-5 space-y-4 max-h-[65vh] overflow-y-auto">
           <div className="grid grid-cols-2 gap-4">
             {[
-              { label: "Age", value: age ? `${age} yrs` : "—" },
+              { label: "Date of Birth", value: dob || "—" },
               { label: "Gender", value: app.gender || "—" },
               { label: "Email", value: app.email || "—" },
               { label: "Phone", value: app.phone || "—" },
