@@ -7,9 +7,14 @@ import LoginPage from './components/LoginPage'
 import { useAuth } from './hooks/useAuth'
 
 function App() {
-  const { isAuthenticated, login, logout, loading, error, setError } = useAuth();
+  const { user, checking, login, logout, loading, error, setError } = useAuth();
 
-  if (!isAuthenticated) {
+
+  if (checking) {
+    return null; 
+  }
+
+  if (!user) {
     return (
       <LoginPage
         onLogin={login}
@@ -23,7 +28,6 @@ function App() {
   return (
     <>
       <Dashboard onLogout={logout} />
-
     </>
   );
 }

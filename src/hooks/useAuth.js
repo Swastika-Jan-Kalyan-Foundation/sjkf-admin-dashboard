@@ -1,76 +1,71 @@
-import { useState, useEffect, useCallback } from "react";
-import { AUTH_CONFIG } from "./authConfig";
+import { useState, useCallback, useEffect } from "react";
 
-
-async function sha256(text) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(text);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-}
-
-function getSession() {
-  try {
-    const raw = sessionStorage.getItem(AUTH_CONFIG.sessionKey);
-    if (!raw) return null;
-    const session = JSON.parse(raw);
-    if (Date.now() > session.expiresAt) {
-      sessionStorage.removeItem(AUTH_CONFIG.sessionKey);
-      return null;
-    }
-    return session;
-  } catch {
-    return null;
-  }
-}
+const API_BASE = "https://sjkfapi.onrender.com";
 
 export function useAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => !!getSession());
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [checking, setChecking] = useState(true);
   const [error, setError] = useState(null);
 
-  // Re-check session on mount (handles tab refresh)
-  useEffect(() => {
-    setIsAuthenticated(!!getSession());
+  const checkSession = useCallback(async () => {
+    setChecking(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/me`, {
+        credentials: "include",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+      } else {
+        setUser(null);
+      }
+    } catch {
+      setUser(null);
+    } finally {
+      setChecking(false);
+    }
   }, []);
+
+  useEffect(() => {
+    checkSession();
+  }, [checkSession]);
 
   const login = useCallback(async (username, password) => {
     setLoading(true);
     setError(null);
     try {
-      const [userHash, passHash] = await Promise.all([
-        sha256(username.trim()),
-        sha256(password),
-      ]);
-
-      if (
-        userHash === AUTH_CONFIG.usernameHash &&
-        passHash === AUTH_CONFIG.passwordHash
-      ) {
-        const session = {
-          loggedInAt: Date.now(),
-          expiresAt: Date.now() + AUTH_CONFIG.sessionDuration,
-        };
-        sessionStorage.setItem(AUTH_CONFIG.sessionKey, JSON.stringify(session));
-        setIsAuthenticated(true);
-        return true;
-      } else {
-        setError("Invalid username or password.");
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Login failed");
         return false;
       }
-    } catch (err) {
-      setError("An error occurred. Please try again.");
+      setUser(data.user);
+      return true;
+    } catch {
+      setError("Network error — please try again");
       return false;
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const logout = useCallback(() => {
-    sessionStorage.removeItem(AUTH_CONFIG.sessionKey);
-    setIsAuthenticated(false);
+  const logout = useCallback(async () => {
+    try {
+      await fetch(`${API_BASE}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } finally {
+      setUser(null);
+    }
   }, []);
 
-  return { isAuthenticated, login, logout, loading, error, setError };
+  return { user, loading, checking, error, setError, login, logout };
 }
