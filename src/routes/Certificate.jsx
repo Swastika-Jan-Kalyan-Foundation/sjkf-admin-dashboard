@@ -4,7 +4,7 @@ const BASE_URL = "https://sjkfapi.onrender.com/api/certificate";
 
 /* ── API Helpers ── */
 const apiCall = (url, options) =>
-  fetch(url, options).then(async (r) => {
+  fetch(url, {...options, credentials: "include"}).then(async (r) => {
     const data = await r.json();
     if (!r.ok) throw new Error(data.message || "Request failed");
     return data;
